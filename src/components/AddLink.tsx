@@ -27,7 +27,6 @@ import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { addLink } from "~/server/actions";
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
 import { env } from "~/env.mjs";
 
 const formSchema = z.object({
@@ -41,7 +40,6 @@ const formSchema = z.object({
 
 const AddLink = () => {
   const [open, setOpen] = React.useState(false);
-  const session = useSession();
   const router = useRouter();
   const [isPending, startTransition] = React.useTransition();
   const form = useForm<z.infer<typeof formSchema>>({
@@ -54,7 +52,7 @@ const AddLink = () => {
 
   function onSubmit(link: z.infer<typeof formSchema>) {
     startTransition(() => {
-      addLink(link, session.data?.user.id ?? "")
+      addLink(link)
         .then(() => {
           form.reset();
           router.refresh();

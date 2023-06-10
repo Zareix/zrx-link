@@ -1,15 +1,11 @@
 "use server";
 
 import { type Link } from "@prisma/client";
+import { getServerActionSession } from "~/server/auth";
 import { prisma } from "~/server/db";
 
-export const addLink = async (
-  link: Pick<Link, "url" | "slug">,
-  userId: string
-) => {
-  // TODO: uncomment this when auth is working
-  //   const session = await getServerSideSession();
-  const session = { user: { id: userId } };
+export const addLink = async (link: Pick<Link, "url" | "slug">) => {
+  const session = await getServerActionSession();
 
   if (!session) {
     throw new Error("You must be logged in to add a link");
@@ -25,6 +21,20 @@ export const addLink = async (
 };
 
 export const deleteLink = async (slug: string) => {
-  // TODO Check user is owner of link
+  const session = await getServerActionSession();
+  if (!session) {
+    throw new Error("You must be logged in to delete a link");
+  }
+
+  const link = await prisma.link.findUnique({ where: { slug } });
+
+  if (!link) {
+    throw new Error("Link not found");
+  }
+
+  if (link.userId !== session.user.id) {
+    throw new Error("You must be the owner of the link to delete it");
+  }
+
   return await prisma.link.delete({ where: { slug } });
 };

@@ -31,7 +31,6 @@ import {
   TableHeader,
   TableRow,
 } from "~/components/ui/table";
-import { env } from "~/env.mjs";
 import { deleteLink as deleteLinkAction } from "~/server/actions";
 
 interface DataTableProps<TData, TValue> {
