@@ -5,7 +5,8 @@ import {
   type NextAuthOptions,
   type DefaultSession,
 } from "next-auth";
-import DiscordProvider from "next-auth/providers/discord";
+import EmailProvider from "next-auth/providers/email";
+import { notFound, redirect } from "next/navigation";
 import { env } from "~/env.mjs";
 import { prisma } from "~/server/db";
 
@@ -44,12 +45,15 @@ export const authOptions: NextAuthOptions = {
         id: user.id,
       },
     }),
+    signIn: ({ user }) => {
+      return env.ADMIN_EMAILS.includes(user.email ?? "");
+    },
   },
   adapter: PrismaAdapter(prisma),
   providers: [
-    DiscordProvider({
-      clientId: env.DISCORD_CLIENT_ID,
-      clientSecret: env.DISCORD_CLIENT_SECRET,
+    EmailProvider({
+      server: env.EMAIL_SERVER,
+      from: env.EMAIL_FROM,
     }),
     /**
      * ...add more providers here.
@@ -73,4 +77,19 @@ export const getServerAuthSession = (ctx: {
   res: GetServerSidePropsContext["res"];
 }) => {
   return getServerSession(ctx.req, ctx.res, authOptions);
+};
+
+export const getServerSideSession = () => {
+  return getServerSession(authOptions);
+};
+
+export const checkUserCanManageLinks = async () => {
+  const session = await getServerSideSession();
+  if (!session?.user.email) {
+    redirect("/api/auth/signin");
+  }
+
+  if (!env.ADMIN_EMAILS.includes(session.user.email)) {
+    notFound();
+  }
 };
