@@ -162,17 +162,6 @@ const LinkList = ({ links }: { links: Link[] }) => {
           accessorKey: "slug",
           header: "Slug",
           enableHiding: false,
-          cell: ({ row }) => {
-            const slug = row.getValue<string>("slug");
-            return (
-              <a
-                href={`${env.NEXT_PUBLIC_WEBSITE_URL}/${slug}`}
-                className="text-right font-medium"
-              >
-                {slug}
-              </a>
-            );
-          },
         },
         {
           accessorKey: "url",
