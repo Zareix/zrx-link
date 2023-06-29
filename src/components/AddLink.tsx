@@ -27,7 +27,7 @@ import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { addLink } from "~/server/actions";
 import { useRouter } from "next/navigation";
-import { env } from "~/env.mjs";
+import { useToast } from "~/components/ui/use-toast";
 
 const formSchema = z.object({
   slug: z
@@ -39,6 +39,7 @@ const formSchema = z.object({
 });
 
 const AddLink = () => {
+  const { toast } = useToast();
   const [open, setOpen] = React.useState(false);
   const router = useRouter();
   const [isPending, startTransition] = React.useTransition();
@@ -55,16 +56,38 @@ const AddLink = () => {
       addLink(link)
         .then(() => {
           form.reset();
-          router.refresh();
           setOpen(false);
+          toast({
+            title: "Link added",
+            description: `Your link '/${link.slug}' has been added`,
+          });
+          router.refresh();
         })
-        .catch(console.error);
+        .catch(
+          (err) =>
+            err instanceof Error &&
+            toast({
+              title: "Error while adding link",
+              description: err.message,
+              variant: "destructive",
+            })
+        );
     });
   }
 
   return (
     <div className="flex w-full justify-end">
-      <Dialog open={open} onOpenChange={setOpen}>
+      <Dialog
+        open={open}
+        onOpenChange={(open) => {
+          if (!open)
+            form.reset({
+              slug: "",
+              url: "",
+            });
+          setOpen(open);
+        }}
+      >
         <DialogTrigger asChild>
           <Button variant="outline">
             <PlusSquareIcon className="mr-1" size={18} />
@@ -74,7 +97,7 @@ const AddLink = () => {
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Add a new link</DialogTitle>
-            <DialogDescription>
+            <DialogDescription asChild>
               <Form {...form}>
                 <form
                   onSubmit={form.handleSubmit(onSubmit)}
@@ -90,7 +113,7 @@ const AddLink = () => {
                           <Input placeholder="abcdef" {...field} />
                         </FormControl>
                         <FormDescription>
-                          {env.NEXT_PUBLIC_WEBSITE_URL + "/"}
+                          {window.location.host + "/"}
                           <span className="font-semibold">{field.value}</span>
                         </FormDescription>
                         <FormMessage />

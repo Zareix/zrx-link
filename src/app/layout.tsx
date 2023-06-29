@@ -1,4 +1,5 @@
 import Providers from "~/app/providers";
+import { Toaster } from "~/components/ui/toaster";
 import "~/styles/globals.css";
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
@@ -10,6 +11,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
         </head>
         <body>
           <main className="my-8">{children}</main>
+          <Toaster />
         </body>
       </html>
     </Providers>

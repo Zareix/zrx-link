@@ -36,7 +36,7 @@ import { deleteLink as deleteLinkAction } from "~/server/actions";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
-  defaultVisibility: VisibilityState;
+  defaultVisibility?: VisibilityState;
 }
 
 export function DataTable<TData, TValue>({
@@ -161,6 +161,17 @@ const LinkList = ({ links }: { links: Link[] }) => {
           accessorKey: "slug",
           header: "Slug",
           enableHiding: false,
+          cell: ({ row }) => {
+            const slug = "/" + row.getValue<string>("slug");
+            return (
+              <a
+                href={slug}
+                className="text-right font-medium text-blue-900 hover:text-blue-800"
+              >
+                {slug}
+              </a>
+            );
+          },
         },
         {
           accessorKey: "url",
@@ -222,10 +233,6 @@ const LinkList = ({ links }: { links: Link[] }) => {
           ),
         },
       ]}
-      defaultVisibility={{
-        updatedAt: window.innerWidth > 768,
-        createdAt: window.innerWidth > 768,
-      }}
       data={links}
     />
   );
