@@ -1,13 +1,10 @@
-import { checkUserCanManageLinks, getServerSideSession } from "~/server/auth";
+import { checkUserCanManageLinks } from "~/server/auth";
 import { prisma } from "~/server/db";
 import LinkList from "~/components/LinkList";
 import AddLink from "~/components/AddLink";
 
-const getLinks = async (userId?: string) =>
+const getLinks = async () =>
   prisma.link.findMany({
-    where: {
-      userId,
-    },
     orderBy: {
       createdAt: "desc",
     },
@@ -15,8 +12,7 @@ const getLinks = async (userId?: string) =>
 
 const DashboardPage = async () => {
   await checkUserCanManageLinks();
-  const session = await getServerSideSession();
-  const links = await getLinks(session?.user.id);
+  const links = await getLinks();
 
   return (
     <div className="container grid gap-2">
