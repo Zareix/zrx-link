@@ -14,8 +14,8 @@
     "backend"
   ],
   "scripts": {
-    "backend:dev": "cd backend && bun run dev",
-    "frontend:dev": "cd frontend && bun run dev",
+    "backend:dev": "cd backend && bun i && bun run dev",
+    "frontend:dev": "cd frontend && bun i && bun run dev",
     "dev": "concurrently -n backend,frontend -c blue,green \"bun:backend:dev\" \"bun:frontend:dev\""
   }
 }
