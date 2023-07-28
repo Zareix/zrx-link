@@ -1,0 +1,25 @@
+{
+  "name": "frontend",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@elysiajs/eden": "^0.5.6",
+    "@tanstack/solid-query": "^4.32.0",
+    "hono": "^3.3.4",
+    "solid-js": "^1.7.8"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.14",
+    "elysia": "^0.5.25",
+    "postcss": "^8.4.27",
+    "tailwindcss": "^3.3.3",
+    "vite": "^4.4.7",
+    "vite-plugin-solid": "^2.7.0"
+  }
+}

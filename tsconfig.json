@@ -1,47 +1,22 @@
 {
   "compilerOptions": {
-    "target": "es2017",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "allowJs": true,
-    "checkJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
-    "esModuleInterop": true,
+    "lib": ["ESNext"],
     "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
+    "target": "esnext",
+    "moduleResolution": "bundler",
+    "moduleDetection": "force",
+    "allowImportingTsExtensions": true,
+    "strict": true,
+    "downlevelIteration": true,
+    "skipLibCheck": true,
     "jsx": "preserve",
-    "incremental": true,
-    "noUncheckedIndexedAccess": true,
-    "baseUrl": ".",
-    "paths": {
-      "~/*": [
-        "./src/*"
-      ]
-    },
-    "plugins": [
-      {
-        "name": "next"
-      }
+    "jsxImportSource": "solid-js",
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "allowJs": true,
+    "noEmit": true,
+    "types": [
+      "bun-types" // add Bun global
     ]
-  },
-  "include": [
-    ".eslintrc.cjs",
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    "**/*.cjs",
-    "**/*.mjs",
-    ".next/types/**/*.ts"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  }
 }
