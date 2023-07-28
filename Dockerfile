@@ -7,7 +7,7 @@ COPY ./frontend .
 RUN bun install
 
 
-FROM oven/bun
+FROM oven/bun AS runner
 
 WORKDIR /app
 
