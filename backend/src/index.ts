@@ -3,6 +3,7 @@ import { cors } from 'hono/cors';
 
 import api from './api';
 import db from './db';
+import { serveStatic } from 'hono/bun';
 
 const port = process.env.PORT ? parseInt(process.env.PORT) : 3000;
 
