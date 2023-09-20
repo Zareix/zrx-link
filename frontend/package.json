@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@elysiajs/eden": "^0.6.0",
+    "@elysiajs/eden": "^0.7.0",
     "@tanstack/solid-query": "^4.32.0",
     "solid-js": "^1.7.8"
   },
