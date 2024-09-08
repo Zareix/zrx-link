@@ -4,7 +4,7 @@
   "type": "module",
   "devDependencies": {
     "bun-types": "latest",
-    "concurrently": "^8.2.0"
+    "concurrently": "^9.0.0"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
