@@ -3,7 +3,7 @@
   "name": "backend",
   "dependencies": {
     "@hono/zod-validator": "^0.4.0",
-    "hono": "^3.3.4",
+    "hono": "^4.0.0",
     "redis": "^4.6.7",
     "zod": "^3.21.4"
   },
